@@ -75,6 +75,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="oAS-kh-zxf" id="YDv-nB-lgP"/>
+                        <outlet property="conditionImageView" destination="eKV-bQ-wDP" id="9sy-aV-Nhc"/>
+                        <outlet property="conditionLabel" destination="lMA-J1-3sx" id="DPo-LD-dYc"/>
+                        <outlet property="dayLabel" destination="Wnj-dS-6GB" id="Je2-2G-HP4"/>
+                        <outlet property="locationLabel" destination="7cj-Oj-iSI" id="iCb-ow-qkQ"/>
+                        <outlet property="temperatureLabel" destination="uOf-y9-ao3" id="hWF-Bf-VpJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
