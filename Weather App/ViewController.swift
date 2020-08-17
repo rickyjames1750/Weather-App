@@ -25,7 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     let gradientLayer = CAGradientLayer()
     
-    let apikey = "d3660d3f7146ff61ea9025056ee800d5"
+    let apiKey = "d3660d3f7146ff61ea9025056ee800d5"
     var lat =  11.344533
     var lon = 104.33322
     var activityIndicator: NVActivityIndicatorView!
@@ -61,8 +61,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         let location = locations[0]
         lat = location.coordinate.latitude
         lon = location.coordinate.longitude
-        Alamofire.request("https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(apikey)&units=metric").responseJSON {
-            response in
+        Alamofire.request("http://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=metric").responseJSON {
+        response in
             self.activityIndicator.stopAnimating()
             if let responseStr = response.result.value {
                 let jsonResponse = JSON(responseStr)
@@ -75,11 +75,21 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 self.conditionLabel.text = jsonWeather["main"].stringValue
                 self.temperatureLabel.text = "\(Int(round(jsonTemp["temp"].doubleValue)))"
                 
-                //let date = Date()
-                //let
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "EEEE"
+                self.dayLabel.text = dateFormatter.string(from: date)
+                
+                let suffix = iconName.suffix(1)
+                if(suffix == "n") {
+                    self.setGrayGradientBackground()
+                } else {
+                    self.setBlueGradientBackground()
+                }
                 
             }
         }
+        self.locationManager.stopUpdatingLocation()
     }
 
     func setBlueGradientBackground() {
@@ -89,7 +99,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         gradientLayer.colors = [topColor, bottomColor]
         
     }
-    func grayGradientBackground() {
+    func setGrayGradientBackground() {
         let topColor = UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1.0).cgColor
         let bottomColor = UIColor(red: 72.0/255.0, green: 72.0/255.0, blue: 72.0/255.0, alpha: 1.0).cgColor
         gradientLayer.frame = view.bounds
