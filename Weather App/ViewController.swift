@@ -5,7 +5,7 @@
 //  Created by Ricky Sparks on 8/8/20.
 //  Copyright © 2020 Ricky J. Sparks. All rights reserved.
 //
-
+import Foundation
 import UIKit
 import Alamofire
 import SwiftyJSON
@@ -65,7 +65,19 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             response in
             self.activityIndicator.stopAnimating()
             if let responseStr = response.result.value {
-                let jsonResponse = J
+                let jsonResponse = JSON(responseStr)
+                let jsonWeather = jsonResponse["weather"].array![0]
+                let jsonTemp = jsonResponse["main"]
+                let iconName = jsonWeather["icon"].stringValue
+                
+                self.locationLabel.text = jsonResponse["name"].stringValue
+                self.conditionImageView.image = UIImage(named: iconName)
+                self.conditionLabel.text = jsonWeather["main"].stringValue
+                self.temperatureLabel.text = "\(Int(round(jsonTemp["temp"].doubleValue)))"
+                
+                //let date = Date()
+                //let
+                
             }
         }
     }
