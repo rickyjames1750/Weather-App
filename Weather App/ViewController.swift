@@ -5,6 +5,7 @@
 //  Created by Ricky Sparks on 8/8/20.
 //  Copyright © 2020 Ricky J. Sparks. All rights reserved.
 //
+
 import Foundation
 import UIKit
 import Alamofire
@@ -26,7 +27,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     let gradientLayer = CAGradientLayer()
     
     let apiKey = "d3660d3f7146ff61ea9025056ee800d5"
-    var lat =  11.344533
+    var lat = 11.344533
     var lon = 104.33322
     var activityIndicator: NVActivityIndicatorView!
     let locationManager = CLLocationManager()
@@ -35,13 +36,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         super.viewDidLoad()
         backgroundView.layer.addSublayer(gradientLayer)
         
-        let indicatorSize:CGFloat = 70
+        let indicatorSize: CGFloat = 70
         let indicatorFrame = CGRect(x: (view.frame.width-indicatorSize)/2, y: (view.frame.height-indicatorSize)/2, width: indicatorSize, height: indicatorSize)
         activityIndicator = NVActivityIndicatorView(frame: indicatorFrame, type: .lineScale, color: UIColor.white, padding: 20.0)
         activityIndicator.backgroundColor = UIColor.black
         view.addSubview(activityIndicator)
-        
-        activityIndicator.stopAnimating()
         
         locationManager.requestWhenInUseAuthorization()
         activityIndicator.startAnimating()
@@ -62,7 +61,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         lat = location.coordinate.latitude
         lon = location.coordinate.longitude
         Alamofire.request("http://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(lon)&appid=\(apiKey)&units=metric").responseJSON {
-        response in
+            response in
             self.activityIndicator.stopAnimating()
             if let responseStr = response.result.value {
                 let jsonResponse = JSON(responseStr)
@@ -86,10 +85,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                 } else {
                     self.setBlueGradientBackground()
                 }
-                
             }
         }
         self.locationManager.stopUpdatingLocation()
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
 
     func setBlueGradientBackground() {
